@@ -14,6 +14,7 @@ import xml.etree.ElementTree as ET
 from collections import Counter, OrderedDict
 from sqlite import SQLite
 from graphable import GraphableObject, GraphableRelation
+import os
 
 
 class RxNorm (object):
@@ -107,7 +108,9 @@ class RxNormLookup (object):
 	
 	def __init__(self):
 		absolute = os.path.dirname(os.path.realpath(__file__))
-		self.sqlite = SQLite.get(os.path.join(absolute, 'databases/rxnorm.db'))
+		db_file = os.environ.get('SQLITE_FILE')
+		db_file = db_file if db_file else os.path.join(absolute, 'databases/rxnorm.db')
+		self.sqlite = SQLite.get(db_file)
 	
 	
 	# MARK: - "name" lookup
