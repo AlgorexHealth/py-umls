@@ -35,7 +35,7 @@ if [ ! -e umls.db ]; then
 		current=$(pwd)
 		cd "$1/META"
 		echo "-> Converting RRF files for SQLite"
-		for f in MRCONSO.RRF MRDEF.RRF MRSTY.RRF MRREL.RRF; do
+		for f in MRCONSO.RRF MRDEF.RRF MRSTY.RRF; do
 			sed -e 's/.$//' -e 's/"//g' "$f" > "${f%RRF}pipe"
 		done
 		cd $current
@@ -85,26 +85,7 @@ if [ ! -e umls.db ]; then
 		ATUI varchar,
 		CVF varchar
 	)"
-	# init the database for MRREL
-	sqlite3 umls.db "CREATE TABLE MRREL (
-		CUI1 varchar,
-		AUI1 varchar,
-		STYPE1 varchar,
-		REL varchar,
-		CUI2 varchar,
-		AUI2 varchar,
-		STYPE2, 
-		RELA,
-		RUI,
-		SRUI,
-		SAB,
-		SL,
-		DIR,
-		RG,
-		SUPRESS,
-		CVF
-		)
-"	
+	
 	# import tables
 	for f in "$1/META/"*.pipe; do
 		table=$(basename ${f%.pipe})
