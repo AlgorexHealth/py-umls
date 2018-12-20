@@ -109,6 +109,8 @@ if [ ! -e umls.db ]; then
 	sqlite3 umls.db "ALTER TABLE descriptions ADD COLUMN STY TEXT"
 	sqlite3 umls.db "CREATE INDEX X_CUI_desc ON descriptions (CUI)"
 	sqlite3 umls.db "UPDATE descriptions SET STY = (SELECT GROUP_CONCAT(MRSTY.TUI, '|') FROM MRSTY WHERE MRSTY.CUI = descriptions.CUI GROUP BY MRSTY.CUI)"
+	sqlite3 umls.db "CREATE INDEX sab_tty on mrconso(sab,tty)"
+	sqlite3 umls.db ".read databases/cpt_descriptions.sql"
 else
 	echo "=> umls.db already exists"
 fi
