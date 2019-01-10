@@ -1,9 +1,10 @@
-create table cpt_descriptions as with short_desc as (
+create table cpt_descriptions as 
+with short_desc as (
 select
 code, 
 str as short_desc
 from mrconso
-where SAB = 'CPT' and tty='AB'),
+where SAB = 'CPT' and tty='AB' ),
 consumer_desc as (
 select
 code, 
